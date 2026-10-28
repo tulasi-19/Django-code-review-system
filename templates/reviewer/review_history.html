@@ -1,0 +1,26 @@
+{% extends "reviewer/base.html" %}
+{% block title %}Review History{% endblock %}
+{% block content %}
+<h1>Review History</h1>
+<div class="card">
+  {% if submissions %}
+  <table>
+    <thead><tr><th>Title</th><th>Language</th><th>Score</th><th>Status</th><th>Date</th><th></th></tr></thead>
+    <tbody>
+      {% for s in submissions %}
+      <tr>
+        <td>{{ s.title }}</td>
+        <td>{{ s.get_language_display }}</td>
+        <td>{% if s.review %}{{ s.review.score }}/100{% else %}&mdash;{% endif %}</td>
+        <td><span class="badge badge-{{ s.status }}">{{ s.get_status_display }}</span></td>
+        <td>{{ s.created_at|date:"M d, Y H:i" }}</td>
+        <td><a href="{% url 'review_detail' s.pk %}">View</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p>No submissions yet.</p>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "reviewer/base.html" %}
+{% block title %}Review - {{ submission.title }}{% endblock %}
+{% block content %}
+<a href="{% url 'dashboard' %}" class="btn-secondary btn" style="margin-bottom:16px;">&larr; Back</a>
+
+<div class="card">
+  <h2>{{ submission.title }}</h2>
+  <p style="color:var(--muted);margin-top:-8px;">
+    {{ submission.get_language_display }} &middot; Submitted {{ submission.created_at|date:"M d, Y H:i" }}
+    &middot; <span class="badge badge-{{ submission.status }}">{{ submission.get_status_display }}</span>
+  </p>
+  <pre style="background:#0f172a;color:#e2e8f0;padding:16px;border-radius:8px;overflow-x:auto;font-size:0.85rem;">{{ submission.code }}</pre>
+</div>
+
+{% if review %}
+<div class="card">
+  <div class="score-circle">{{ review.score }}</div>
+  <p style="text-align:center;color:var(--muted);margin-top:-8px;">
+    {{ review.issues_found }} issue(s) found &middot; engine: {{ review.get_engine_used_display }}
+  </p>
+  <h3>Feedback</h3>
+  <div class="feedback-block">{{ review.feedback }}</div>
+</div>
+{% else %}
+<div class="card"><p>Review is still processing or failed to generate.</p></div>
+{% endif %}
+{% endblock %}

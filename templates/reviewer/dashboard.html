@@ -1,0 +1,35 @@
+{% extends "reviewer/base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h1>Welcome, {{ user.username }}</h1>
+
+<div class="grid-stats">
+  <div class="stat-card"><div class="value">{{ total }}</div><div class="label">Total Submissions</div></div>
+  <div class="stat-card"><div class="value">{{ reviewed }}</div><div class="label">Reviewed</div></div>
+  <div class="stat-card"><div class="value">{{ avg_score }}</div><div class="label">Avg. Score</div></div>
+</div>
+
+<a href="{% url 'submit_code' %}" class="btn">+ Submit New Code</a>
+
+<div class="card" style="margin-top:24px;">
+  <h3>Recent Submissions</h3>
+  {% if submissions %}
+  <table>
+    <thead><tr><th>Title</th><th>Language</th><th>Status</th><th>Date</th><th></th></tr></thead>
+    <tbody>
+      {% for s in submissions %}
+      <tr>
+        <td>{{ s.title }}</td>
+        <td>{{ s.get_language_display }}</td>
+        <td><span class="badge badge-{{ s.status }}">{{ s.get_status_display }}</span></td>
+        <td>{{ s.created_at|date:"M d, Y H:i" }}</td>
+        <td><a href="{% url 'review_detail' s.pk %}">View</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p>No submissions yet. Submit your first piece of code to get instant feedback.</p>
+  {% endif %}
+</div>
+{% endblock %}

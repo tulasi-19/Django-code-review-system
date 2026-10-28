@@ -1,0 +1,18 @@
+{% extends "reviewer/base.html" %}
+{% block title %}Register{% endblock %}
+{% block content %}
+<div class="card" style="max-width:420px;margin:40px auto;">
+  <h2>Create your account</h2>
+  <form method="post">
+    {% csrf_token %}
+    {% for field in form %}
+      <label>{{ field.label }}</label>
+      {{ field }}
+      {% if field.help_text %}<div class="helptext">{{ field.help_text }}</div>{% endif %}
+      {{ field.errors }}
+    {% endfor %}
+    <button class="btn" type="submit" style="margin-top:18px;width:100%;">Register</button>
+  </form>
+  <p style="margin-top:14px;font-size:0.9rem;">Already have an account? <a href="{% url 'login' %}">Login</a></p>
+</div>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "reviewer/base.html" %}
+{% block title %}Submit Code{% endblock %}
+{% block content %}
+<div class="card">
+  <h2>Submit Code for Review</h2>
+  <form method="post">
+    {% csrf_token %}
+    {% for field in form %}
+      <label>{{ field.label }}</label>
+      {{ field }}
+      {{ field.errors }}
+    {% endfor %}
+    <button class="btn" type="submit" style="margin-top:18px;">Submit for Review</button>
+  </form>
+</div>
+{% endblock %}
